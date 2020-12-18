@@ -17,6 +17,9 @@ import ec.edu.ups.idao.VehiculoDAO;
 import java.awt.Color;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JPanel;
 
 /**
  *
@@ -30,6 +33,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private VentanaRegistroDeSalida ventanaRegistroDeSalida;
     private VentanaCrearVehiculo ventanaCrearVehiculo;
     private VentanaCrearCliente ventanaCrearCliente;
+    private VentanaIniciarSesion ventanaIniciarSesion;
 
     //Daos
     private IClienteDAO clienteDAO;
@@ -67,16 +71,61 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ventanaRegistroDeSalida = new VentanaRegistroDeSalida(controladorTicket);
         ventanaCrearVehiculo = new VentanaCrearVehiculo(ventanaRegistroDeEntrada, controladorVehiculo, controladorCliente);
         ventanaCrearCliente = new VentanaCrearCliente(ventanaRegistroDeEntrada, controladorCliente);
-
+        ventanaIniciarSesion = new VentanaIniciarSesion(this);
         //Agregar las ventanas internas
         jDesktopPane1.add(ventanaListarTickets);
         jDesktopPane1.add(ventanaRegistroDeEntrada);
         jDesktopPane1.add(ventanaRegistroDeSalida);
+        jDesktopPane1.add(ventanaIniciarSesion);
+        jDesktopPane1.add(ventanaCrearCliente);
 
         //mensajes
         localizacion = new Locale("es", "EC");
         mensaje = ResourceBundle.getBundle("ec.edu.ups.idioma.mensajes", localizacion);
+        //botones
+        jButtonRegistrarEntrada.setVisible(false);
+        jButtonRegistrarSalida.setVisible(false);
+        jMenuAjustes.setVisible(false);
+        jMenuRegistro.setVisible(false);
+    }
+    public JButton getjButtonRegistrarEntrada() {
+        return jButtonRegistrarEntrada;
+    }
 
+    public void setjButtonRegistrarEntrada(JButton jButtonRegistrarEntrada) {
+        this.jButtonRegistrarEntrada = jButtonRegistrarEntrada;
+    }
+
+    public JButton getjButtonRegistrarSalida() {
+        return jButtonRegistrarSalida;
+    }
+
+    public void setjButtonRegistrarSalida(JButton jButtonRegistrarSalida) {
+        this.jButtonRegistrarSalida = jButtonRegistrarSalida;
+    }
+
+    public JMenu getjMenuAjustes() {
+        return jMenuAjustes;
+    }
+
+    public void setjMenuAjustes(JMenu jMenuAjustes) {
+        this.jMenuAjustes = jMenuAjustes;
+    }
+
+    public JMenu getjMenuColor() {
+        return jMenuColor;
+    }
+
+    public void setjMenuColor(JMenu jMenuColor) {
+        this.jMenuColor = jMenuColor;
+    }
+
+    public JMenu getjMenuRegistro() {
+        return jMenuRegistro;
+    }
+
+    public void setjMenuRegistro(JMenu jMenuRegistro) {
+        this.jMenuRegistro = jMenuRegistro;
     }
 
     public void cambiarIdioma(String idioma, String localidad) {
@@ -117,6 +166,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }
 
+   
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,6 +204,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Parqueadero UPS");
+        setMaximizedBounds(new java.awt.Rectangle(10000, 10000, 10000, 10000));
         setResizable(false);
         setSize(new java.awt.Dimension(850, 600));
 
@@ -185,27 +238,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jPanelPrincipal.setLayout(jPanelPrincipalLayout);
         jPanelPrincipalLayout.setHorizontalGroup(
             jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrincipalLayout.createSequentialGroup()
-                .addGap(0, 227, Short.MAX_VALUE)
-                .addComponent(jLabelTitulo)
-                .addGap(147, 147, 147))
             .addGroup(jPanelPrincipalLayout.createSequentialGroup()
                 .addGap(126, 126, 126)
                 .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelTitulo)
                     .addComponent(jButtonRegistrarSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonRegistrarEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(253, Short.MAX_VALUE))
         );
         jPanelPrincipalLayout.setVerticalGroup(
             jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPrincipalLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(28, 28, 28)
                 .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addGap(45, 45, 45)
                 .addComponent(jButtonRegistrarEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonRegistrarSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(193, Short.MAX_VALUE))
+                .addContainerGap(231, Short.MAX_VALUE))
         );
 
         jDesktopPane1.setLayer(jPanelPrincipal, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -229,6 +279,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenuItemIniciarSecion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/imagen/iniciar-sesion.png"))); // NOI18N
         jMenuItemIniciarSecion.setText("Iniciar Sesion");
+        jMenuItemIniciarSecion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemIniciarSecionActionPerformed(evt);
+            }
+        });
         jMenuInicio.add(jMenuItemIniciarSecion);
 
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/imagen/hotel (1).png"))); // NOI18N
@@ -242,6 +297,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenuItemCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/imagen/cerrar.png"))); // NOI18N
         jMenuItemCerrar.setText("Cerrar");
+        jMenuItemCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCerrarActionPerformed(evt);
+            }
+        });
         jMenuInicio.add(jMenuItemCerrar);
 
         menuBar.add(jMenuInicio);
@@ -402,6 +462,17 @@ ventanaCrearCliente.setVisible(true);
    ventanaListarTickets.setVisible(true);
     }//GEN-LAST:event_jMenuItemTicketsActionPerformed
 
+    private void jMenuItemIniciarSecionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemIniciarSecionActionPerformed
+       ventanaIniciarSesion.setVisible(true);
+    }//GEN-LAST:event_jMenuItemIniciarSecionActionPerformed
+
+    private void jMenuItemCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCerrarActionPerformed
+       jButtonRegistrarEntrada.setVisible(false);
+        jButtonRegistrarSalida.setVisible(false);
+        jMenuAjustes.setVisible(false);
+        jMenuRegistro.setVisible(false); 
+    }//GEN-LAST:event_jMenuItemCerrarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -441,6 +512,8 @@ ventanaCrearCliente.setVisible(true);
     private javax.swing.JButton jButtonRegistrarEntrada;
     private javax.swing.JButton jButtonRegistrarSalida;
     private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JMenu jMenuAjustes;
     private javax.swing.JMenu jMenuColor;
@@ -456,6 +529,10 @@ ventanaCrearCliente.setVisible(true);
     private javax.swing.JMenuItem jMenuItemTickets;
     private javax.swing.JMenuItem jMenuItemVehiculos;
     private javax.swing.JMenu jMenuRegistro;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel30;
+    private javax.swing.JPanel jPanel31;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelPrincipal;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JRadioButtonMenuItem rbCian;

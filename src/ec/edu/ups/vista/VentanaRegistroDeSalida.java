@@ -5,7 +5,9 @@
  */
 package ec.edu.ups.vista;
 
+import ec.edu.ups.controlador.ControladorCliente;
 import ec.edu.ups.controlador.ControladorTicket;
+import ec.edu.ups.controlador.ControladorVehiculo;
 import ec.edu.ups.modelo.Cliente;
 import ec.edu.ups.modelo.Ticket;
 import ec.edu.ups.modelo.Vehiculo;
@@ -27,10 +29,13 @@ public class VentanaRegistroDeSalida extends javax.swing.JInternalFrame {
     private String alerta2;
     private String alerta3;
     private String salida;
+    private VentanaRegistroDeEntrada ventanaRegistroDeEntrada;
+    private ControladorCliente controladorCliente;
+    private ControladorVehiculo controladorVehiculo;
 
     public VentanaRegistroDeSalida(ControladorTicket controladorTicket) {
         initComponents();
-
+   ventanaRegistroDeEntrada= new VentanaRegistroDeEntrada(controladorCliente, controladorTicket, controladorVehiculo);
         //Controlador
         this.controladorTicket = controladorTicket;
         alerta2 = "Registro de salida correcto ";
@@ -476,7 +481,7 @@ public class VentanaRegistroDeSalida extends javax.swing.JInternalFrame {
                 if (ticket.getTotal() == 0.0) {
                     //obtenemos la hora actual
                     jTextFieldFechaSalida.setText(controladorTicket.obtenerFechaActual().toString());
-
+                    
                     //agregamos la fecha de salida al ticket
                     ticket.setFechaSalida(LocalDateTime.parse(jTextFieldFechaSalida.getText()));
 
